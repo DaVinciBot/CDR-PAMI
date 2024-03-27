@@ -1,0 +1,10 @@
+{
+    "name": "com",
+    "version": "1.0.0",
+    "description": "Library dedicated to connect via websocket to the remote compute",
+    "keywords": "com, websocket, remote, compute",
+    "dependencies": {
+    },
+    "frameworks": "*",
+    "platforms": "*"
+  }
