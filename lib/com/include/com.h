@@ -10,11 +10,12 @@ public:
     void sendJson();
     void receive();
     void webSocketEvent(WStype_t type, uint8_t * payload, size_t length);
+    bool canGo = false;
 
 private:
     char* ssid;
     char* password;
-    char* ip = "192.168.0.104";
+    char* ip = "rc.local";
     char* name = "PAMI";
     int port = 8080;
     WebSocketsClient webSocket;

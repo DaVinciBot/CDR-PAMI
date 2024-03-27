@@ -1,11 +1,16 @@
 #include <com.h>
 
+Com com = Com("DVB_CDR", "ROAD_T0_TOP1");
 
 void setup() {
-  Com com("DVB_CDR", "ROAD_T0_TOP1");
-  
+  Serial.begin(9600);
+  com.sendJson();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  Serial.println("Connexion en cours");
+  if(com.canGo){
+    Serial.println("Connexion réussie");
+  }
+
 }

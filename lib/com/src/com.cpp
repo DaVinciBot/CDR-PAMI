@@ -13,12 +13,12 @@ Com::Com(char *ssid, char *password)
         // USE_SERIAL.print(".");
     }
 
-    this->webSocket.begin(ip, port, "/pami?name=PAMI");
+    this->webSocket.begin(ip, port, "/pami?sender=PAMI");
 }
 
 void Com::sendJson()
 {
-    // put your code here
+    this->webSocket.sendTXT("test");
 }
 
 void Com::receive()
