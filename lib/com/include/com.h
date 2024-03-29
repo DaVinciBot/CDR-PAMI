@@ -1,15 +1,20 @@
 #include <Arduino.h>
 
 #include <WiFi.h>
+#include <WiFiMulti.h>
 #include <WebSocketsClient.h>
+
+#include <ArduinoJson.h>
 
 class Com {
 
 public:
+    Com();
     Com(char* ssid, char* password);
-    void sendJson();
-    void receive();
+    void sendMsg(char* msg, char* data);
     void webSocketEvent(WStype_t type, uint8_t * payload, size_t length);
+    void init(char* ssid, char* password);
+    WebSocketsClient webSocket;
     bool canGo = false;
 
 private:
@@ -18,8 +23,12 @@ private:
     char* ip = "rc.local";
     char* name = "PAMI";
     int port = 8080;
-    WebSocketsClient webSocket;
-    void send_data(char* data);
-    void receive_data();
-    void wait_for_go();
+    WifiMulti multi_wifi;
+};
+
+struct Message {
+    char* sender;
+    char* msg;
+    char* data;
+    unsigned long ts;
 };

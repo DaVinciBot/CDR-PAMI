@@ -1,16 +1,15 @@
 #include <com.h>
 
-Com com = Com("DVB_CDR", "ROAD_T0_TOP1");
+Com com;
 
 void setup() {
   Serial.begin(9600);
-  com.sendJson();
+  Serial.println("Initialisation");
+  com.init("DVB_CDR", "ROAD_T0_TOP1");
 }
 
 void loop() {
-  Serial.println("Connexion en cours");
-  if(com.canGo){
-    Serial.println("Connexion réussie");
-  }
+  // put your main code here, to run repeatedly:
+  com.websocket.loop();
 
 }

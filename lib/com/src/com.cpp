@@ -2,28 +2,55 @@
 
 Com::Com(char *ssid, char *password)
 {
-    this->ssid = ssid;
-    this->password = password;
-
-    WiFi.begin(ssid, password);
-    // wait until connection is established
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(100);
-        // USE_SERIAL.print(".");
-    }
-
-    this->webSocket.begin(ip, port, "/pami?sender=PAMI");
+    this->init(ssid, password);
 }
 
-void Com::sendJson()
+Com::Com()
 {
-    this->webSocket.sendTXT("test");
 }
 
-void Com::receive()
+void Com::init(char *ssid, char *password)
 {
-    // put your code here
+        this->ssid = ssid;
+        this->password = password;
+
+        multi_wifi.addAP(ssid, password);
+
+    	while(multi_wifi.run() != WL_CONNECTED) {
+    		delay(100);
+    	}
+
+        this->webSocket.begin(ip, port, "/pami?sender=PAMI");
+
+        this->webSocket.onEvent([&](WStype_t type, uint8_t *payload, size_t length) {
+            this->webSocketEvent(type, payload, length);
+        });
+
+        //try ever 5000 again if connection has failed
+    	this->webSocket.setReconnectInterval(5000);
+
+}
+
+void Com::sendMsg(char *msg, char *data)
+{
+    // message is on the JSON form {sender=PAMI,msg=MSG,data=DATA,ts=TIMESTAMP}
+    // timestamp
+    unsigned long ts = millis();
+    // create a JSON object
+
+    /*
+    StaticJsonDocument<200> doc;
+    doc["sender"] = this->name;
+    doc["msg"] = msg;
+    doc["data"] = data;
+    doc["ts"] = ts;
+
+    // serialize the JSON object
+    String json;
+    serializeJson(doc, json);
+    */
+    // send the message
+    this->webSocket.sendTXT("aaaaaaaaaaaaaa");
 }
 
 void Com::webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
